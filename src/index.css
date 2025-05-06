@@ -1,0 +1,64 @@
+:root {
+  /* colors */
+  --color-white: hsla(0, 100%, 100%, 1);
+  --color-black: hsla(0, 0%, 0%, 1);
+  --color-grey-500: hsla(219, 13%, 44%, 1);
+  --color-grey-50: hsla(220, 38%, 97%, 1);
+  --color-blue-950: hsla(214, 24%, 23%, 1);
+  --color-blue-900: hsla(216, 25%, 25%, 1);
+  --color-blue-850: hsla(215, 27%, 32%, 1);
+  --color-blue-500: hsla(223, 100%, 59%, 1);
+  --color-blue-300: hsla(216, 47%, 78%, 1);
+  --color-blue-100: hsla(220, 50%, 95%, 1);
+  --color-blue-50: hsla(225, 100%, 96%, 1);
+  --color-green-500: hsla(151, 68%, 52%, 1);
+  --color-green-100: hsla(151, 88%, 94%, 1);
+  --color-purple-600: hsla(277, 91%, 56%, 1);
+  --color-purple-100: hsla(278, 100%, 95%, 1);
+  --color-orange-400: hsla(22, 100%, 60%, 1);
+  --color-orange-50: hsla(27, 100%, 96%, 1);
+  --color-red-500: hsla(0, 82%, 63%, 1);
+  
+  /* spacing */
+  --spacing-2300: 11.5rem; /* 184px */
+  --spacing-1800: 9rem;    /* 144px */
+  --spacing-1600: 8rem;    /* 128px */
+  --spacing-800: 4rem;     /*  64px */
+  --spacing-600: 3rem;     /*  48px */
+  --spacing-500: 2.5rem;   /*  40px */
+  --spacing-400: 2rem;     /*  32px */
+  --spacing-300: 1.5rem;   /*  24px */
+  --spacing-200: 1rem;     /*  16px */
+  --spacing-100: 0.5rem;   /*   8px */
+  
+  --font-xxxl: 4rem;      /* 64px */
+  --font-xxl: 2.5rem;     /* 40px */
+  --font-xl: 2.25rem;     /* 36px */
+  --font-lg: 1.75rem;     /* 28px */
+  --font-md: 1.5rem;      /* 24px */
+  --font-base: 1.25rem;   /* 20px */
+  --font-sm: 1.125rem;    /* 18px */
+  --font-xs: 0.875rem;    /* 14px */
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('./assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900; /* or the actual range supported by the font */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('./assets/fonts/Rubik-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+#root{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-grey-50);
+}
