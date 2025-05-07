@@ -1,6 +1,7 @@
 /*ToDO
 *  [ ] fetch Data only onload
 *  [x] create selectedLanguage (state)
+*  [x] create separate Header component
 *  [ ] create basic frame header + question section + options section
 *  [ ] add shadows
 *  [ ] add "selected-option" to selected option
@@ -10,58 +11,32 @@
 * */
 
 import {useState} from 'react';
-import {getIconUrl} from "./utils.js";
-import clsx from "clsx";
+
 import data from '../data.json';
 import './App.css'
 import correctIcon from './assets/images/icon-correct.svg'
-import DarkMoonIcon from './assets/images/icon-moon-dark.svg'
-import DarkSunIcon from './assets/images/icon-sun-dark.svg'
+
+import Header from "./components/Header/Header.jsx";
+
 
 function App() {
   // state variables
   const [selectedLanguage, setSelectedLanguage] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  console.log(isDarkMode)
 
   // derived variables
   const quizData = data.quizzes;
 
   return (
     <>
-      {
-        selectedLanguage !== null &&
-        <header className="header">
-          <div className="header__language">
-            <img
-              className={clsx(
-                {"header__language-logo":true},
-                {"language-html":selectedLanguage===0},
-                {"language-css":selectedLanguage===1},
-                {"language-javascript":selectedLanguage===2},
-                {"language-accessibility":selectedLanguage===3},
-              )}
-              src={getIconUrl(quizData[selectedLanguage].icon)} alt="icon"/>
-            <h3 className="header__selected-language">{quizData[selectedLanguage].title}</h3>
+      <Header
+        selectedLanguage={selectedLanguage}
+        quizData={quizData}
+        isDarkMode={isDarkMode}
+        setIsDarkMode={setIsDarkMode}
+      />
 
-            <div className="header__mode-toggle">
-              <img className="header__mode-toggle-icons header__sun-icon--dark" src={DarkSunIcon} alt="dark sun icon"/>
-              <div className="header__mode-toggle-control">
-                <input
-                  className="header__mode-toggle-checkbox"
-                  type="checkbox"
-                  id="mode-toggle"
-                  value={isDarkMode}
-                  onChange={() => {
-                    return setIsDarkMode(!isDarkMode);
-                  }}
-                />
-                <label className="header__mode-toggle-label" htmlFor="mode-toggle"></label>
-              </div>
-              <img className="header__mode-toggle-icons header__moon-icon--dark" src={DarkMoonIcon} alt="dark sun icon"/>
-            </div>
-          </div>
-        </header>
-      }
       <main className="quiz">
         <section className="quiz__question-container">
           <p className="quiz__question-number">Question 6 out of 10</p>
