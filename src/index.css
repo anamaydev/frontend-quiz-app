@@ -39,6 +39,8 @@
   --font-base: 1.25rem;   /* 20px */
   --font-sm: 1.125rem;    /* 18px */
   --font-xs: 0.875rem;    /* 14px */
+  
+  /*color-scheme: light dark;*/
 }
 
 @font-face {
