@@ -86,3 +86,51 @@
   height: 1rem;
   width: 1rem;
 }
+
+/*@media (min-width: 48rem) {*/
+@media (min-width: 600px) {
+  .header{
+    padding: var(--spacing-500) var(--spacing-800);
+  }
+  
+  .header__selected-language{
+    font-size: var(--font-lg);
+  }
+  
+  .header__language-logo{
+    width: 3.5rem;
+    padding: 0.5rem;
+  }
+  
+  .header__mode-toggle{
+    height: 3.5rem;
+  }
+  
+  .header__mode-toggle-icons{
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  
+  .header__mode-toggle-label::before{
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+  
+  .header__mode-toggle-label{
+    height: 1.75rem;
+    width: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header{
+    padding: 84px 80px;
+  }
+}
+
+
+@media (min-width: 90rem) {
+  .header{
+    padding: 84px 140px;
+  }
+}

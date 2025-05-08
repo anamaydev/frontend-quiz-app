@@ -14,10 +14,8 @@ import {useState} from 'react';
 
 import data from '../data.json';
 import './App.css'
-import correctIcon from './assets/images/icon-correct.svg'
-
-import Header from "./components/Header/Header.jsx";
-
+import correctIcon from "./assets/images/icon-correct.svg";
+import Header from './components/Header/Header.jsx';
 
 function App() {
   // state variables
@@ -47,42 +45,40 @@ function App() {
         </section>
 
         <section className="quiz__options-container">
-          <label className="quiz__options-label">
-            <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
-            <span className="quiz__options-icon-container">
-              <p className="quiz__options-icon">A</p>
-            </span>
-            <p className="quiz__options-value">4.5:1</p>
-            <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
-          </label>
-
-          <label className="quiz__options-label">
-            <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
-            <span className="quiz__options-icon-container">
-              <p className="quiz__options-icon">A</p>
-            </span>
-            <p className="quiz__options-value">4.5:1</p>
-            <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
-          </label>
-
-          <label className="quiz__options-label">
-            <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
-            <span className="quiz__options-icon-container">
-              <p className="quiz__options-icon">A</p>
-            </span>
-            <p className="quiz__options-value">4.5:1</p>
-            <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
-          </label>
-
-          <label className="quiz__options-label">
-            <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
-            <span className="quiz__options-icon-container">
-              <p className="quiz__options-icon">A</p>
-            </span>
-            <p className="quiz__options-value">4.5:1</p>
-            <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
-          </label>
-
+          <div className="quiz__options-group">
+            <label className="quiz__options-label">
+              <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
+              <span className="quiz__options-icon-container">
+                <p className="quiz__options-icon">A</p>
+              </span>
+              <p className="quiz__options-value">4.5:1</p>
+              <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
+            </label>
+            <label className="quiz__options-label">
+              <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
+              <span className="quiz__options-icon-container">
+                <p className="quiz__options-icon">A</p>
+              </span>
+              <p className="quiz__options-value">4.5:1</p>
+              <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
+            </label>
+            <label className="quiz__options-label">
+              <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
+              <span className="quiz__options-icon-container">
+                <p className="quiz__options-icon">A</p>
+              </span>
+              <p className="quiz__options-value">4.5:1</p>
+              <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
+            </label>
+            <label className="quiz__options-label">
+              <input className="quiz__options-radio" type="radio" name="" value="4.5:1"/>
+              <span className="quiz__options-icon-container">
+                <p className="quiz__options-icon">A</p>
+              </span>
+              <p className="quiz__options-value">4.5:1</p>
+              <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>
+            </label>
+          </div>
           <button className="quiz__next-question-button">Next Question</button>
         </section>
       </main>

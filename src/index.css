@@ -64,3 +64,9 @@
   flex-direction: column;
   background-color: var(--color-grey-50);
 }
+
+@media (min-width: 48rem) {
+  #root{
+    min-height: 100vh;
+  }
+}
