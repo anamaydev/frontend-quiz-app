@@ -46,7 +46,7 @@
 @font-face {
   font-family: 'Rubik';
   src: url('./assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
-  font-weight: 100 900; /* or the actual range supported by the font */
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -63,10 +63,22 @@
   display: flex;
   flex-direction: column;
   background-color: var(--color-grey-50);
+  min-height: 100vh;
 }
 
-@media (min-width: 48rem) {
-  #root{
-    min-height: 100vh;
-  }
+/* background-color for each language*/
+.language-html{
+  background-color: var(--color-orange-50);
+}
+
+.language-css{
+  background-color: var(--color-green-100);
+}
+
+.language-javascript{
+  background-color: var(--color-blue-50);
+}
+
+.language-accessibility{
+  background-color: var(--color-purple-100);
 }

@@ -1,8 +1,8 @@
 import './Header.css'
-import clsx from "clsx";
-import {getIconUrl} from "../../utils.js";
-import DarkSunIcon from "../../assets/images/icon-sun-dark.svg";
-import DarkMoonIcon from "../../assets/images/icon-moon-dark.svg";
+import clsx from 'clsx';
+import {getIconUrl} from '../../utils.js';
+import DarkSunIcon from '../../assets/images/icon-sun-dark.svg';
+import DarkMoonIcon from '../../assets/images/icon-moon-dark.svg';
 
 export default function Header({selectedLanguage, quizData, isDarkMode, setIsDarkMode}) {
   return(
@@ -19,7 +19,15 @@ export default function Header({selectedLanguage, quizData, isDarkMode, setIsDar
                 {"language-javascript": selectedLanguage === 2},
                 {"language-accessibility": selectedLanguage === 3},
               )}
-              src={getIconUrl(quizData[selectedLanguage].icon)} alt="icon"/>
+              src={getIconUrl(quizData[selectedLanguage].icon)}
+              alt={
+                quizData[selectedLanguage].title === "HTML" ? "HTML logo" :
+                  quizData[selectedLanguage].title === "CSS" ? "CSS logo" :
+                    quizData[selectedLanguage].title === "JavaScript" ? "JavaScript logo" :
+                      quizData[selectedLanguage].title === "Accessibility" ? "Accessibility logo" :
+                        "Quiz logo"
+              }
+            />
             <h3 className="header__selected-language">{quizData[selectedLanguage].title}</h3>
           </>
         }
