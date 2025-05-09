@@ -4,34 +4,55 @@
 *  [x] create question element
 *  [x] create options element
 *     [x] options - correct selection highlight
-*     [ ] options - incorrect selection highlight
-*     [ ] options - hover / selection selection highlight
-*  [ ] creat submit button
-*  [ ] creat next question button
+*     [x] options - incorrect selection highlight
+*     [x] selection selection highlight
+*  [x] creat submit button
+*  [x] creat next question button
 *  [ ] show score card
 * */
 
-import {useState} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import './Main.css'
 import {getIconUrl} from '../../utils.js'
 import clsx from 'clsx';
 import { nanoid } from 'nanoid'
 import correctIcon from '../../assets/images/icon-correct.svg';
 import incorrectIcon from '../../assets/images/icon-incorrect.svg'
+import errorIcon from '../../assets/images/icon-error.svg'
 
-export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex}) {
+export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber}) {
 
-  const [questionNumber, setQuestionNumber] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
+  const [error, setError] = useState(false);
   const optionLetters = "ABCD";
+
+  const errorRef = useRef(null);
+
+  useEffect(()=>{
+    if(error){
+      errorRef.current.scrollIntoView();
+    }
+  },[error])
+
   /* Selecting question based on selected language */
   const currentQuestion = selectedLanguageIndex !== null ? quizData[selectedLanguageIndex].questions[questionNumber].question: null;
   console.log(currentQuestion);
 
   function handleNextQuestion(){
+    setSelectedOption(null);
     setQuestionNumber(prevQuestionNumber => prevQuestionNumber + 1);
     setIsAnswerSubmitted(false);
+    setError(false)
+  }
+
+  function handleSubmit(){
+    if(selectedOption === null){
+      setError(true);
+      console.log(`---------- error: ${error} ----------`);
+    }else{
+      setIsAnswerSubmitted(true);
+    }
   }
 
   const currentQuestionOptions = selectedLanguageIndex !== null ? quizData[selectedLanguageIndex].questions[questionNumber].options.map((option, index)=> {
@@ -62,6 +83,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           value={option}
           checked={selectedOption === option}
           onChange={() => setSelectedOption(option)}
+          disabled={isAnswerSubmitted}
         />
         <span
           // className="quiz__options-icon-container"
@@ -73,7 +95,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           )}
         >
           <p
-            // className="quiz__options-icon"
             className={clsx(
               {"quiz__options-icon": true},
               {"quiz__options-icon--correct": isCorrectOption},
@@ -166,8 +187,21 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
             <div className="quiz__options-group">
               {currentQuestionOptions}
             </div>
-            {!isAnswerSubmitted && <button className="quiz__next-question-button" onClick={()=>setIsAnswerSubmitted(true)}>Submit</button>}
-            {isAnswerSubmitted && <button className="quiz__next-question-button" onClick={handleNextQuestion}>Next Question</button>}
+            {
+              !isAnswerSubmitted &&
+              <button className="quiz__next-question-button" onClick={handleSubmit}>Submit</button>
+            }
+            {
+              isAnswerSubmitted &&
+              <button className="quiz__next-question-button" onClick={handleNextQuestion}>Next Question</button>
+            }
+            {
+              error &&
+              <div ref={errorRef} className="quiz__error-container">
+                <img className="quiz__error-icon" src={errorIcon} alt=""/>
+                <p className="quiz__error">Please select an answer</p>
+              </div>
+            }
           </>
         }
       </section>

@@ -180,6 +180,26 @@
   line-height: 1;
 }
 
+.quiz__error-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-100);
+}
+
+.quiz__error-icon{
+  height: 2rem;
+  width: 2rem;
+}
+
+.quiz__error{
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: var(--font-sm);
+  line-height: 1;
+  color: var(--color-red-500);
+}
+
 /*@media (min-width: 48rem) {  */
 @media (min-width: 600px) {
   .quiz{
@@ -247,6 +267,16 @@
   
   .quiz__current-question{
     margin-bottom: var(--spacing-500);
+  }
+  
+  .quiz__error-icon{
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  
+  .quiz__error{
+    font-size: var(--font-md);
+    line-height: 1.5;
   }
 }
 

@@ -1,12 +1,6 @@
 /*ToDO
 *  [ ] fetch Data only onload
-*  [x] create selectedLanguage (state)
-*  [x] create separate Header component
-*  [ ] create basic frame header + question section + options section
 *  [ ] add shadows
-*  [ ] add "selected-option" to selected option
-*  [ ] add "correct-option" to selected option
-*  [ ] add "incorrect-option" to selected option
 *  [ ] check alt for all images/icons
 * */
 
@@ -22,6 +16,7 @@ function App() {
   // state variables
   const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [questionNumber, setQuestionNumber] = useState(0);
   console.log(`isDarkMode: ${isDarkMode}`)
   console.log(`selectedLanguage: ${selectedLanguageIndex}`)
 
@@ -42,6 +37,8 @@ function App() {
           selectedLanguageIndex={selectedLanguageIndex}
           quizData={quizData}
           setSelectedLanguageIndex={setSelectedLanguageIndex}
+          questionNumber={questionNumber}
+          setQuestionNumber={setQuestionNumber}
         />
       </main>
     </>
