@@ -20,10 +20,10 @@ import Main from './components/Main/Main.jsx';
 
 function App() {
   // state variables
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  console.log(isDarkMode)
-  console.log(selectedLanguage)
+  console.log(`isDarkMode: ${isDarkMode}`)
+  console.log(`selectedLanguage: ${selectedLanguageIndex}`)
 
   // derived variables
   const quizData = data.quizzes;
@@ -31,7 +31,7 @@ function App() {
   return (
     <>
       <Header
-        selectedLanguage={selectedLanguage}
+        selectedLanguageIndex={selectedLanguageIndex}
         quizData={quizData}
         isDarkMode={isDarkMode}
         setIsDarkMode={setIsDarkMode}
@@ -39,9 +39,9 @@ function App() {
 
       <main className="quiz">
         <Main
-          selectedLanguage={selectedLanguage}
+          selectedLanguageIndex={selectedLanguageIndex}
           quizData={quizData}
-          setSelectedLanguage={setSelectedLanguage}
+          setSelectedLanguageIndex={setSelectedLanguageIndex}
         />
       </main>
     </>

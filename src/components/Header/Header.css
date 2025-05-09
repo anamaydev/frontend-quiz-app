@@ -108,13 +108,15 @@
 
 @media (min-width: 1024px) {
   .header{
-    padding: 84px 80px;
+    /*padding: 84px 80px;*/
+    padding-left: 140px;
+    padding-right: 140px;
   }
 }
 
 
-@media (min-width: 90rem) {
-  .header{
-    padding: 84px 140px;
-  }
-}
+/*@media (min-width: 90rem) {*/
+/*  .header{*/
+/*    !*padding: 84px 140px;*!*/
+/*  }*/
+/*}*/

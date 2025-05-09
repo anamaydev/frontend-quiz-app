@@ -4,31 +4,31 @@ import {getIconUrl} from '../../utils.js';
 import DarkSunIcon from '../../assets/images/icon-sun-dark.svg';
 import DarkMoonIcon from '../../assets/images/icon-moon-dark.svg';
 
-export default function Header({selectedLanguage, quizData, isDarkMode, setIsDarkMode}) {
+export default function Header({selectedLanguageIndex, quizData, isDarkMode, setIsDarkMode}) {
   return(
     <header className="header">
       <div className="header__language">
         {
-          selectedLanguage !== null &&
+          selectedLanguageIndex !== null &&
           <>
             <img
               className={clsx(
                 {"header__language-logo": true},
-                {"language-html": selectedLanguage === 0},
-                {"language-css": selectedLanguage === 1},
-                {"language-javascript": selectedLanguage === 2},
-                {"language-accessibility": selectedLanguage === 3},
+                {"language-html": selectedLanguageIndex === 0},
+                {"language-css": selectedLanguageIndex === 1},
+                {"language-javascript": selectedLanguageIndex === 2},
+                {"language-accessibility": selectedLanguageIndex === 3},
               )}
-              src={getIconUrl(quizData[selectedLanguage].icon)}
+              src={getIconUrl(quizData[selectedLanguageIndex].icon)}
               alt={
-                quizData[selectedLanguage].title === "HTML" ? "HTML logo" :
-                  quizData[selectedLanguage].title === "CSS" ? "CSS logo" :
-                    quizData[selectedLanguage].title === "JavaScript" ? "JavaScript logo" :
-                      quizData[selectedLanguage].title === "Accessibility" ? "Accessibility logo" :
+                quizData[selectedLanguageIndex].title === "HTML" ? "HTML logo" :
+                  quizData[selectedLanguageIndex].title === "CSS" ? "CSS logo" :
+                    quizData[selectedLanguageIndex].title === "JavaScript" ? "JavaScript logo" :
+                      quizData[selectedLanguageIndex].title === "Accessibility" ? "Accessibility logo" :
                         "Quiz logo"
               }
             />
-            <h3 className="header__selected-language">{quizData[selectedLanguage].title}</h3>
+            <h3 className="header__selected-language">{quizData[selectedLanguageIndex].title}</h3>
           </>
         }
 
