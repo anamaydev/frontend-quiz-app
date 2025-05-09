@@ -21,10 +21,14 @@ import incorrectIcon from '../../assets/images/icon-incorrect.svg'
 import errorIcon from '../../assets/images/icon-error.svg'
 
 export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber}) {
+  console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [points, setPoints] = useState(0);
   const optionLetters = "ABCD";
 
   const errorRef = useRef(null);
@@ -35,13 +39,26 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
     }
   },[error])
 
+
+  useEffect(() => {
+    console.log("Updated points:", points);
+  }, [points]);
+
+
   /* Selecting question based on selected language */
-  const currentQuestion = selectedLanguageIndex !== null ? quizData[selectedLanguageIndex].questions[questionNumber].question: null;
+  const currentQuestion = (selectedLanguageIndex !== null && questionNumber < 10) ? quizData[selectedLanguageIndex].questions[questionNumber].question: null;
+  // const currentQuestion = selectedLanguageIndex !== null ? quizData[selectedLanguageIndex].questions[questionNumber < 10 ? questionNumber: questionNumber-1].question: null;
   console.log(currentQuestion);
 
   function handleNextQuestion(){
     setSelectedOption(null);
-    setQuestionNumber(prevQuestionNumber => prevQuestionNumber + 1);
+    setQuestionNumber(prevQuestionNumber => {
+      if(prevQuestionNumber < 10){
+        return prevQuestionNumber + 1
+      }else{
+        return prevQuestionNumber;
+      }
+    });
     setIsAnswerSubmitted(false);
     setError(false)
   }
@@ -52,20 +69,36 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
       console.log(`---------- error: ${error} ----------`);
     }else{
       setIsAnswerSubmitted(true);
+      const correctAnswer = quizData[selectedLanguageIndex].questions[questionNumber].answer;
+      if(selectedOption === correctAnswer){
+        setPoints(prevPoints => prevPoints + 1);
+        console.log(`++++ Points: ${points} ++++`);
+      }else{
+        setPoints(prevPoints => prevPoints - 1);
+      }
     }
   }
 
-  const currentQuestionOptions = selectedLanguageIndex !== null ? quizData[selectedLanguageIndex].questions[questionNumber].options.map((option, index)=> {
+  function handleRestart() {
+    setSelectedLanguageIndex(null);
+    setQuestionNumber(0);
+    setPoints(0);
+    setSelectedOption(null);
+    setIsAnswerSubmitted(false);
+    setError(false);
+  }
+
+  const currentQuestionOptions = (selectedLanguageIndex !== null  && questionNumber < 10) ? quizData[selectedLanguageIndex].questions[questionNumber].options.map((option, index)=> {
     const correctAnswer = quizData[selectedLanguageIndex].questions[questionNumber].answer;
     const isSelected = selectedOption === option;
     const isCorrectOption = isAnswerSubmitted && option === selectedOption && selectedOption === correctAnswer;
     const isIncorrectOption = isAnswerSubmitted && option === selectedOption && selectedOption !== correctAnswer;
 
-    console.log(`correctAnswer: ${correctAnswer}`);
-    console.log(`isAnswerSubmitted: ${isAnswerSubmitted}`);
-    console.log(`selectedOption: ${selectedOption}`);
-    console.log(`selectedOption === correctAnswer: ${selectedOption === correctAnswer}`);
-    console.log(`umm check: ${isAnswerSubmitted && selectedOption === correctAnswer}`);
+    // console.log(`correctAnswer: ${correctAnswer}`);
+    // console.log(`isAnswerSubmitted: ${isAnswerSubmitted}`);
+    // console.log(`selectedOption: ${selectedOption}`);
+    // console.log(`selectedOption === correctAnswer: ${selectedOption === correctAnswer}`);
+    // console.log(`umm check: ${isAnswerSubmitted && selectedOption === correctAnswer}`);
     return(
       <label
         key={nanoid()}
@@ -86,8 +119,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           disabled={isAnswerSubmitted}
         />
         <span
-          // className="quiz__options-icon-container"
-
           className={clsx(
             {"quiz__options-icon-container":true},
             {"quiz__options-icon-container--correct": isCorrectOption},
@@ -162,8 +193,19 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
         }
 
         {
+          /* welcome message */
+          selectedLanguageIndex !== null && questionNumber >= 10 &&
+          <>
+            <h1 className="quiz__welcome-message">
+              <span className="quiz__welcome-message-light">Quiz completed</span>
+              <br/>
+              <span>You scored...</span></h1>
+          </>
+        }
+
+        {
           /* current question */
-          selectedLanguageIndex !== null &&
+          selectedLanguageIndex !== null && questionNumber < 10 &&
           <>
             <p className="quiz__question-number">Question {questionNumber+1} out of 10</p>
             <h2 className="quiz__current-question">{currentQuestion}</h2>
@@ -182,7 +224,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
 
         {
           // current question options
-          selectedLanguageIndex !== null &&
+          selectedLanguageIndex !== null && questionNumber < 10 &&
           <>
             <div className="quiz__options-group">
               {currentQuestionOptions}
@@ -202,6 +244,39 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
                 <p className="quiz__error">Please select an answer</p>
               </div>
             }
+          </>
+        }
+
+        {
+          selectedLanguageIndex !== null && questionNumber >= 10 &&
+          <>
+            <div className="quiz__score-card">
+              <div className="quiz__score-language">
+                <img
+                  className={clsx(
+                    {"header__language-logo": true},
+                    {"language-html": selectedLanguageIndex === 0},
+                    {"language-css": selectedLanguageIndex === 1},
+                    {"language-javascript": selectedLanguageIndex === 2},
+                    {"language-accessibility": selectedLanguageIndex === 3},
+                  )}
+                  src={getIconUrl(quizData[selectedLanguageIndex].icon)}
+                  alt={
+                    quizData[selectedLanguageIndex].title === "HTML" ? "HTML logo" :
+                      quizData[selectedLanguageIndex].title === "CSS" ? "CSS logo" :
+                        quizData[selectedLanguageIndex].title === "JavaScript" ? "JavaScript logo" :
+                          quizData[selectedLanguageIndex].title === "Accessibility" ? "Accessibility logo" :
+                            "Quiz logo"
+                  }
+                />
+                <h3 className="header__selected-language">{quizData[selectedLanguageIndex].title}</h3>
+              </div>
+              <div className="quiz__score-container">
+                <h2 className="quiz__score-points">{points}</h2>
+                <p className="quiz__score-out-of">out of 10</p>
+              </div>
+            </div>
+            <button className="quiz__next-question-button" onClick={handleRestart}>Play again</button>
           </>
         }
       </section>
