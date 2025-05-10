@@ -1,4 +1,5 @@
 /*ToDo:
+*  [ ] fetch data from fake api
 *  [x] finish css for all devices
 *  [x] get user language choice
 *  [x] create question element
@@ -12,10 +13,12 @@
 * */
 
 import {useRef, useState, useEffect} from 'react';
-import './Main.css'
-import {getIconUrl} from '../../utils.js'
-import clsx from 'clsx';
 import { nanoid } from 'nanoid'
+
+import './Main.css'
+import clsx from 'clsx';
+
+/* importing required assets */
 import correctIcon from '../../assets/images/icon-correct.svg';
 import incorrectIcon from '../../assets/images/icon-incorrect.svg'
 import errorIcon from '../../assets/images/icon-error.svg'
@@ -25,17 +28,12 @@ import javascriptIcon from '../../assets/images/icon-js.svg'
 import accessibilityIcon from '../../assets/images/icon-accessibility.svg'
 
 export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber}) {
-  console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
-
-
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
   const [error, setError] = useState(false);
   const [points, setPoints] = useState(0);
-  const optionLetters = "ABCD";
-
   const errorRef = useRef(null);
+  const optionLetters = "ABCD";
 
   useEffect(()=>{
     if(error){
@@ -44,14 +42,8 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
   },[error])
 
 
-  useEffect(() => {
-    console.log("Updated points:", points);
-  }, [points]);
-
-
   /* Selecting question based on selected language */
   const currentQuestion = (selectedLanguageIndex !== null && questionNumber < 10) ? quizData[selectedLanguageIndex].questions[questionNumber].question: null;
-  // const currentQuestion = selectedLanguageIndex !== null ? quizData[selectedLanguageIndex].questions[questionNumber < 10 ? questionNumber: questionNumber-1].question: null;
   console.log(currentQuestion);
 
   function handleNextQuestion(){
@@ -77,8 +69,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
       if(selectedOption === correctAnswer){
         setPoints(prevPoints => prevPoints + 1);
         console.log(`++++ Points: ${points} ++++`);
-      }else{
-        setPoints(prevPoints => prevPoints - 1);
       }
     }
   }
@@ -98,11 +88,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
     const isCorrectOption = isAnswerSubmitted && option === selectedOption && selectedOption === correctAnswer;
     const isIncorrectOption = isAnswerSubmitted && option === selectedOption && selectedOption !== correctAnswer;
 
-    // console.log(`correctAnswer: ${correctAnswer}`);
-    // console.log(`isAnswerSubmitted: ${isAnswerSubmitted}`);
-    // console.log(`selectedOption: ${selectedOption}`);
-    // console.log(`selectedOption === correctAnswer: ${selectedOption === correctAnswer}`);
-    // console.log(`umm check: ${isAnswerSubmitted && selectedOption === correctAnswer}`);
     return(
       <label
         key={nanoid()}
@@ -145,8 +130,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
       </label>
     )
   }) : null;
-  console.log(`currentQuestionOptions: ${currentQuestionOptions}`);
-  console.log(`selectedOption: ${selectedOption}`)
 
   /* creating a language selection element */
   const languagesOptions = quizData.map((quiz, index) => (
@@ -270,7 +253,13 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
                     {"language-javascript": selectedLanguageIndex === 2},
                     {"language-accessibility": selectedLanguageIndex === 3},
                   )}
-                  src={getIconUrl(quizData[selectedLanguageIndex].icon)}
+                  src={
+                    quizData[selectedLanguageIndex].title === "HTML" ? htmlIcon  :
+                      quizData[selectedLanguageIndex].title === "CSS" ? cssIcon :
+                        quizData[selectedLanguageIndex].title === "JavaScript" ? javascriptIcon :
+                          quizData[selectedLanguageIndex].title === "Accessibility" ? accessibilityIcon :
+                            null
+                  }
                   alt={
                     quizData[selectedLanguageIndex].title === "HTML" ? "HTML logo" :
                       quizData[selectedLanguageIndex].title === "CSS" ? "CSS logo" :
