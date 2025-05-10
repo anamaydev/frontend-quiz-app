@@ -118,6 +118,7 @@
   background-color: var(--color-grey-50);
   border-radius: 0.375rem;
   margin-right: 1rem;
+  flex-shrink: 0;
 }
 
 .quiz__options-icon-container--correct{
