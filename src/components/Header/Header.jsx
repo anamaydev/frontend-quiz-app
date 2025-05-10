@@ -1,8 +1,11 @@
 import './Header.css'
 import clsx from 'clsx';
-import {getIconUrl} from '../../utils.js';
 import DarkSunIcon from '../../assets/images/icon-sun-dark.svg';
 import DarkMoonIcon from '../../assets/images/icon-moon-dark.svg';
+import htmlIcon from '../../assets/images/icon-html.svg'
+import cssIcon from '../../assets/images/icon-css.svg'
+import javascriptIcon from '../../assets/images/icon-js.svg'
+import accessibilityIcon from '../../assets/images/icon-accessibility.svg'
 
 export default function Header({selectedLanguageIndex, quizData, isDarkMode, setIsDarkMode}) {
   return(
@@ -19,7 +22,13 @@ export default function Header({selectedLanguageIndex, quizData, isDarkMode, set
                 {"language-javascript": selectedLanguageIndex === 2},
                 {"language-accessibility": selectedLanguageIndex === 3},
               )}
-              src={getIconUrl(quizData[selectedLanguageIndex].icon)}
+              src={
+                quizData[selectedLanguageIndex].title === "HTML" ? htmlIcon  :
+                  quizData[selectedLanguageIndex].title === "CSS" ? cssIcon :
+                    quizData[selectedLanguageIndex].title === "JavaScript" ? javascriptIcon :
+                      quizData[selectedLanguageIndex].title === "Accessibility" ? accessibilityIcon :
+                        null
+              }
               alt={
                 quizData[selectedLanguageIndex].title === "HTML" ? "HTML logo" :
                   quizData[selectedLanguageIndex].title === "CSS" ? "CSS logo" :

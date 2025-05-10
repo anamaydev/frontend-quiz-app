@@ -8,7 +8,7 @@
 *     [x] selection selection highlight
 *  [x] creat submit button
 *  [x] creat next question button
-*  [ ] show score card
+*  [x] show score card
 * */
 
 import {useRef, useState, useEffect} from 'react';
@@ -19,6 +19,10 @@ import { nanoid } from 'nanoid'
 import correctIcon from '../../assets/images/icon-correct.svg';
 import incorrectIcon from '../../assets/images/icon-incorrect.svg'
 import errorIcon from '../../assets/images/icon-error.svg'
+import htmlIcon from '../../assets/images/icon-html.svg'
+import cssIcon from '../../assets/images/icon-css.svg'
+import javascriptIcon from '../../assets/images/icon-js.svg'
+import accessibilityIcon from '../../assets/images/icon-accessibility.svg'
 
 export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber}) {
   console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
@@ -155,7 +159,13 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           {"language-javascript": quiz.title === 'JavaScript'},
           {"language-accessibility": quiz.title === 'Accessibility'},
         )}
-        src={getIconUrl(quiz.icon)}
+        src={
+          quiz.title === "HTML" ? htmlIcon :
+            quiz.title === "CSS" ? cssIcon :
+              quiz.title === "JavaScript" ? javascriptIcon :
+                quiz.title === "Accessibility" ? accessibilityIcon :
+                  null
+        }
         alt={
           quiz.title === "HTML" ? "HTML logo" :
             quiz.title === "CSS" ? "CSS logo" :
