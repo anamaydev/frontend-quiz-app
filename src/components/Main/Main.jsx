@@ -33,6 +33,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
   const [error, setError] = useState(false);
   const [points, setPoints] = useState(0);
   const errorRef = useRef(null);
+  const barRef = useRef(null);
   const optionLetters = "ABCD";
 
   useEffect(()=>{
@@ -41,6 +42,12 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
     }
   },[error])
 
+  useEffect(()=>{
+    const barWidth = questionNumber * 10;
+    if(barRef.current){
+      barRef.current.style.width = `${barWidth}%`;
+    }
+  },[questionNumber])
 
   /* Selecting question based on selected language */
   const currentQuestion = (selectedLanguageIndex !== null && questionNumber < 10) ? quizData[selectedLanguageIndex].questions[questionNumber].question: null;
@@ -190,7 +197,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
               <br/>
               <span>Frontend Quiz!</span></h1>
 
-            {/*<p className="quiz__description">*/}
             <p
               className={clsx(
                 {"quiz__description":true},
@@ -218,7 +224,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           /* current question */
           selectedLanguageIndex !== null && questionNumber < 10 &&
           <>
-            {/*<p className="quiz__question-number">*/}
             <p
               className={clsx(
                 {"quiz__question-number":true},
@@ -236,7 +241,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
                 {"quiz__progress-container--dark":isDarkMode},
               )}
             >
-              <div className="quiz__progress-bar"></div>
+              <div ref={barRef} className="quiz__progress-bar"></div>
             </div>
           </>
         }

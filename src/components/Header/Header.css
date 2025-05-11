@@ -61,7 +61,7 @@
   border-radius: 100%;
   margin: 4px auto;
   left: 4px;
-  transition: left 0.3s ease, right 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
 .header__mode-toggle-checkbox{
@@ -69,8 +69,7 @@
 }
 
 .header__mode-toggle-checkbox:checked + .header__mode-toggle-label::before{
-  left: auto;
-  right: 4px;
+  transform: translateX(0.75rem);
 }
 
 .header__mode-toggle-icons{
@@ -110,6 +109,10 @@
   .header__mode-toggle-label{
     height: 1.75rem;
     width: 3rem;
+  }
+  
+  .header__mode-toggle-checkbox:checked + .header__mode-toggle-label::before{
+    transform: translateX(1.25rem);
   }
 }
 
