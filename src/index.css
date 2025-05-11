@@ -64,6 +64,8 @@
   flex-direction: column;
   background-color: var(--color-grey-50);
   min-height: 100vh;
+  position: relative;
+  overflow: hidden;
 }
 
 /* background-color for each language*/

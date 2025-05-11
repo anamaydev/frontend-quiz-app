@@ -27,7 +27,7 @@ import cssIcon from '../../assets/images/icon-css.svg'
 import javascriptIcon from '../../assets/images/icon-js.svg'
 import accessibilityIcon from '../../assets/images/icon-accessibility.svg'
 
-export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber}) {
+export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber, isDarkMode}) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
   const [error, setError] = useState(false);
@@ -133,7 +133,14 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
 
   /* creating a language selection element */
   const languagesOptions = quizData.map((quiz, index) => (
-    <label key={nanoid()} className="quiz__options-label">
+    <label
+      key={nanoid()}
+      className= {clsx(
+        {"quiz__options-label":true},
+        {"quiz__options-label--light":!isDarkMode},
+        {"quiz__options-label--dark":isDarkMode}
+      )}
+    >
       <img
         className={clsx(
           {"quiz__options-language-icon": true},
@@ -178,10 +185,20 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
         selectedLanguageIndex === null &&
           <>
             <h1 className="quiz__welcome-message">
-              <span className="quiz__welcome-message-light">Welcome to the </span>
+              <span className="quiz__welcome-message-thin">Welcome to the </span>
               <br/>
               <span>Frontend Quiz!</span></h1>
-            <p className="quiz__description">Pick a subject to get started</p>
+
+            {/*<p className="quiz__description">*/}
+            <p
+              className={clsx(
+                {"quiz__description":true},
+                {"quiz__description--light": !isDarkMode},
+                {"quiz__description--dark": isDarkMode}
+              )}
+            >
+              Pick a subject to get started
+            </p>
           </>
         }
 
@@ -190,7 +207,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           selectedLanguageIndex !== null && questionNumber >= 10 &&
           <>
             <h1 className="quiz__welcome-message">
-              <span className="quiz__welcome-message-light">Quiz completed</span>
+              <span className="quiz__welcome-message-thin">Quiz completed</span>
               <br/>
               <span>You scored...</span></h1>
           </>
@@ -200,7 +217,16 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
           /* current question */
           selectedLanguageIndex !== null && questionNumber < 10 &&
           <>
-            <p className="quiz__question-number">Question {questionNumber+1} out of 10</p>
+            {/*<p className="quiz__question-number">*/}
+            <p
+              className={clsx(
+                {"quiz__question-number":true},
+                {"quiz__question-number":!isDarkMode},
+                {"quiz__question-number":!isDarkMode}
+              )}
+            >
+              Question {questionNumber+1} out of 10
+            </p>
             <h2 className="quiz__current-question">{currentQuestion}</h2>
             <div className="quiz__progress-container">
               <div className="quiz__progress-bar"></div>

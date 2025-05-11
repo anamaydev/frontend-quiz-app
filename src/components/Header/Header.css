@@ -2,6 +2,14 @@
   padding: var(--spacing-200) var(--spacing-300);
 }
 
+.header--light{
+  color: var(--color-blue-900);
+}
+
+.header--dark{
+  color: var(--color-white);
+}
+
 .header__language{
   display: flex;
   align-items: center;
@@ -12,7 +20,6 @@
   font-family: 'Rubik', sans-serif;
   font-weight: 500;
   font-size: var(--font-sm);
-  color: var(--color-blue-900);
 }
 
 .header__language-logo{
@@ -113,10 +120,3 @@
     padding-right: 140px;
   }
 }
-
-
-/*@media (min-width: 90rem) {*/
-/*  .header{*/
-/*    !*padding: 84px 140px;*!*/
-/*  }*/
-/*}*/

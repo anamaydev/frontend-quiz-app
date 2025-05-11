@@ -1,0 +1,55 @@
+.mobile-arc{
+  position: absolute;
+  z-index: -1;
+}
+
+/* main quiz body*/
+.quiz{
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-500);
+  
+  /* todo: for mobile bottom margin is not there*/
+  margin: var(--spacing-400) var(--spacing-300);
+  color: red;
+}
+
+.quiz--light{
+  color: var(--color-blue-900);
+}
+
+.quiz--dark{
+  color: var(--color-white);
+}
+
+/* 600px */
+@media (min-width: 37.5rem) {
+  .quiz{
+    margin-top: 0;
+    margin-left: var(--spacing-800);
+    margin-right: var(--spacing-800);
+    height: 100%;
+  }
+}
+
+@media (min-width: 64rem) {
+  .mobile-arc {
+    width: 1440px;
+    height: 960px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .quiz{
+    flex-direction: row;
+    gap: 5rem;
+    margin: auto 80px;
+  }
+}
+
+@media (min-width: 90rem) {
+  .quiz{
+    gap: var(--spacing-1800);
+    margin: auto 140px;
+  }
+}

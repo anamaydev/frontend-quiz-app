@@ -1,30 +1,67 @@
 /*ToDO
+*  [x] add picture tag to decide arc based on width
+*  [ ] work on dark-light mode
+*  [ ] store it to local storage
+*  [ ] add shadows and hover effect to buttons
 *  [ ] fetch Data only onload
-*  [ ] add shadows
 *  [ ] check alt for all images/icons
 * */
 
-import {useState} from 'react';
-
+import {useState, useEffect} from 'react';
+import clsx from "clsx";
 import data from '../data.json';
 import './App.css'
 
 import Header from './components/Header/Header.jsx';
 import Main from './components/Main/Main.jsx';
 
+import mobileArcLight from './assets/images/pattern-background-mobile-light.svg'
+import mobileArcDark from './assets/images/pattern-background-mobile-dark.svg'
+import tabletArcLight from './assets/images/pattern-background-tablet-light.svg'
+import tabletArcDark from './assets/images/pattern-background-tablet-dark.svg'
+import desktopArcLight from './assets/images/pattern-background-desktop-light.svg'
+import desktopArcDark from './assets/images/pattern-background-desktop-dark.svg'
+
 function App() {
-  // state variables
   const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
   console.log(`isDarkMode: ${isDarkMode}`)
-  console.log(`selectedLanguage: ${selectedLanguageIndex}`)
 
-  // derived variables
   const quizData = data.quizzes;
+
+  useEffect(()=>{
+    const root = document.getElementById('root');
+    if(!isDarkMode){
+      root.style.backgroundColor = "hsla(220, 38%, 97%, 1)";
+    }else{
+      root.style.backgroundColor = "hsla(216, 25%, 25%, 1)";
+    }
+  },[isDarkMode])
 
   return (
     <>
+      {
+        /* isDarkMode === false : Light */
+        !isDarkMode &&
+        <picture>
+          <source media="(min-width: 64rem)" srcSet={desktopArcLight}/>
+          <source media="(min-width: 37.5rem)" srcSet={tabletArcLight}/>
+          <source srcSet={mobileArcLight}/>
+          <img className="mobile-arc" src={mobileArcLight} alt=""/>
+        </picture>
+      }
+
+      {
+        /* isDarkMode === true : Light */
+        isDarkMode &&
+        <picture>
+          <source media="(min-width: 64rem)" srcSet={desktopArcDark}/>
+          <source media="(min-width: 37.5rem)" srcSet={tabletArcDark}/>
+          <source srcSet={mobileArcDark}/>
+          <img className="mobile-arc" src={mobileArcDark} alt=""/>
+        </picture>
+      }
       <Header
         selectedLanguageIndex={selectedLanguageIndex}
         quizData={quizData}
@@ -32,13 +69,15 @@ function App() {
         setIsDarkMode={setIsDarkMode}
       />
 
-      <main className="quiz">
+      {/*<main className="quiz">*/}
+      <main className={clsx({"quiz":true}, {"quiz--light": !isDarkMode}, {"quiz--dark": isDarkMode})}>
         <Main
           selectedLanguageIndex={selectedLanguageIndex}
           quizData={quizData}
           setSelectedLanguageIndex={setSelectedLanguageIndex}
           questionNumber={questionNumber}
           setQuestionNumber={setQuestionNumber}
+          isDarkMode={isDarkMode}
         />
       </main>
     </>

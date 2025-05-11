@@ -1,7 +1,9 @@
 import './Header.css'
 import clsx from 'clsx';
-import DarkSunIcon from '../../assets/images/icon-sun-dark.svg';
-import DarkMoonIcon from '../../assets/images/icon-moon-dark.svg';
+import darkSunIcon from '../../assets/images/icon-sun-dark.svg';
+import lightSunIcon from '../../assets/images/icon-sun-light.svg';
+import darkMoonIcon from '../../assets/images/icon-moon-dark.svg';
+import lightMoonIcon from '../../assets/images/icon-moon-light.svg';
 import htmlIcon from '../../assets/images/icon-html.svg'
 import cssIcon from '../../assets/images/icon-css.svg'
 import javascriptIcon from '../../assets/images/icon-js.svg'
@@ -9,7 +11,7 @@ import accessibilityIcon from '../../assets/images/icon-accessibility.svg'
 
 export default function Header({selectedLanguageIndex, quizData, isDarkMode, setIsDarkMode}) {
   return(
-    <header className="header">
+    <header className={clsx({"header":true}, {"header--light": !isDarkMode}, {"header--dark":isDarkMode})}>
       <div className="header__language">
         {
           selectedLanguageIndex !== null &&
@@ -42,7 +44,7 @@ export default function Header({selectedLanguageIndex, quizData, isDarkMode, set
         }
 
         <div className="header__mode-toggle">
-          <img className="header__mode-toggle-icons header__sun-icon--dark" src={DarkSunIcon} alt="dark sun icon"/>
+          <img className="header__mode-toggle-icons header__sun-icon--dark" src={!isDarkMode ? darkSunIcon : lightSunIcon} alt="dark sun icon"/>
           <div className="header__mode-toggle-control">
             <input
               className="header__mode-toggle-checkbox"
@@ -55,7 +57,7 @@ export default function Header({selectedLanguageIndex, quizData, isDarkMode, set
             />
             <label className="header__mode-toggle-label" htmlFor="mode-toggle"></label>
           </div>
-          <img className="header__mode-toggle-icons header__moon-icon--dark" src={DarkMoonIcon} alt="dark sun icon"/>
+          <img className="header__mode-toggle-icons header__moon-icon--dark" src={!isDarkMode ? darkMoonIcon : lightMoonIcon} alt="dark sun icon"/>
         </div>
       </div>
     </header>
