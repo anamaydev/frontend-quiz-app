@@ -93,6 +93,8 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
         key={nanoid()}
         className={clsx(
           {"quiz__options-label": true},
+          {"quiz__options-label--light":!isDarkMode},
+          {"quiz__options-label--dark":isDarkMode},
           {"quiz__options-label--selected": isSelected},
           {"quiz__options-label--correct": isCorrectOption},
           {"quiz__options-label--incorrect": isIncorrectOption},
@@ -176,7 +178,6 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
     </label>
   ));
 
-
   return (
     <>
       <section className="quiz__question-container">
@@ -221,14 +222,20 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
             <p
               className={clsx(
                 {"quiz__question-number":true},
-                {"quiz__question-number":!isDarkMode},
-                {"quiz__question-number":!isDarkMode}
+                {"quiz__question-number--light":!isDarkMode},
+                {"quiz__question-number--dark":isDarkMode}
               )}
             >
               Question {questionNumber+1} out of 10
             </p>
             <h2 className="quiz__current-question">{currentQuestion}</h2>
-            <div className="quiz__progress-container">
+            <div
+              className={clsx(
+                {"quiz__progress-container":true},
+                {"quiz__progress-container--light":!isDarkMode},
+                {"quiz__progress-container--dark":isDarkMode},
+              )}
+            >
               <div className="quiz__progress-bar"></div>
             </div>
           </>
@@ -269,7 +276,13 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
         {
           selectedLanguageIndex !== null && questionNumber >= 10 &&
           <>
-            <div className="quiz__score-card">
+            <div
+              className={clsx(
+                {"quiz__score-card":true},
+                {"quiz__score-card--light":!isDarkMode},
+                {"quiz__score-card--dark":isDarkMode},
+              )}
+            >
               <div className="quiz__score-language">
                 <img
                   className={clsx(
@@ -298,7 +311,15 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
               </div>
               <div className="quiz__score-container">
                 <h2 className="quiz__score-points">{points}</h2>
-                <p className="quiz__score-out-of">out of 10</p>
+                <p
+                  className={clsx(
+                    {"quiz__score-out-of":true},
+                    {"quiz__score-out-of--light":!isDarkMode},
+                    {"quiz__score-out-of--dark":isDarkMode}
+                  )}
+                >
+                  out of 10
+                </p>
               </div>
             </div>
             <button className="quiz__next-question-button" onClick={handleRestart}>Play again</button>

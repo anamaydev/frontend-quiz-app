@@ -4,9 +4,6 @@
   font-size: var(--font-xxl);
   line-height: 1;
   margin-bottom: var(--spacing-200);
-  
-  /*todo: change this*/
-  /*color: var(--color-blue-900);*/
 }
 
 .quiz__welcome-message-thin{
@@ -19,10 +16,6 @@
   font-style: italic;
   font-size: var(--font-xs);
   line-height: 1.5;
-  
-  /*todo: create light module for this light*/
-  /*color: var(--color-grey-500);*/
-  color: red;
 }
 
 .quiz__description--light{
@@ -44,10 +37,6 @@
   font-style: italic;
   font-size: var(--font-xs);
   line-height: 1.5;
-  
-  /*todo: create light module for this*/
-  /*color: var(--color-grey-500);*/
-  color: red;
   margin-bottom: var(--spacing-200);
 }
 
@@ -64,7 +53,6 @@
   font-weight: 500;
   font-size: var(--font-base);
   line-height: 1.2;
-  /*color: var(--color-blue-900);*/
   margin-bottom: var(--spacing-300);
 }
 
@@ -72,6 +60,14 @@
   background-color: var(--color-white);
   padding: 0.25rem;
   border-radius: 1rem;
+}
+
+.quiz__progress-container--light {
+  background-color: var(--color-white);
+}
+
+.quiz__progress-container--dark{
+  background-color: var(--color-blue-850);
 }
 
 .quiz__progress-bar{
@@ -154,8 +150,6 @@
   font-weight: 500;
   font-size: var(--font-sm);
   line-height: 1;
-  
-  /*todo: create light module for this*/
   color: var(--color-grey-500);
 }
 
@@ -180,13 +174,11 @@
   font-weight: 500;
   font-size: var(--font-sm);
   line-height: 1;
-  /*color: var(--color-blue-900);*/
 }
 
 .quiz__options-correct-icon{
   height: 2rem;
   width: 2rem;
-  /*padding: 0.25rem;*/
   margin-left: auto;
 }
 
@@ -227,9 +219,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-white);
   border-radius: 0.75rem;
   padding: var(--spacing-400);
+}
+
+.quiz__score-card--light{
+  background-color: var(--color-white);
+}
+
+.quiz__score-card--dark{
+  background-color: var(--color-blue-850);
 }
 
 .quiz__score-language{
@@ -250,7 +249,6 @@
   font-weight: 500;
   font-size: 5.5rem;
   line-height: 1;
-  color: var(--color-blue-900);
 }
 
 .quiz__score-out-of{
@@ -258,7 +256,14 @@
   font-weight: 500;
   font-size: var(--font-sm);
   line-height: 1;
+}
+
+.quiz__score-out-of--light{
   color: var(--color-grey-500);
+}
+
+.quiz__score-out-of--dark{
+  color: var(--color-blue-300)
 }
 
 /* 600px */
@@ -286,7 +291,6 @@
   
   .quiz__options-icon{
     font-size: var(--font-lg);
-    /*border-radius: 0.75rem;*/
   }
   
   .quiz__options-language-icon {
