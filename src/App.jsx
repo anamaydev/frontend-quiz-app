@@ -44,23 +44,27 @@ function App() {
       {
         /* isDarkMode === false : Light */
         !isDarkMode &&
-        <picture>
-          <source media="(min-width: 64rem)" srcSet={desktopArcLight}/>
-          <source media="(min-width: 37.5rem)" srcSet={tabletArcLight}/>
-          <source srcSet={mobileArcLight}/>
-          <img className="mobile-arc" src={mobileArcLight} alt=""/>
-        </picture>
+        <div className="background-arc">
+          <picture>
+            <source media="(min-width: 64rem)" srcSet={desktopArcLight}/>
+            <source media="(min-width: 37.5rem)" srcSet={tabletArcLight}/>
+            <source srcSet={mobileArcLight}/>
+            <img className="mobile-arc" src={mobileArcLight} alt=""/>
+          </picture>
+        </div>
       }
 
       {
         /* isDarkMode === true : Light */
         isDarkMode &&
-        <picture>
-          <source media="(min-width: 64rem)" srcSet={desktopArcDark}/>
-          <source media="(min-width: 37.5rem)" srcSet={tabletArcDark}/>
-          <source srcSet={mobileArcDark}/>
-          <img className="mobile-arc" src={mobileArcDark} alt=""/>
-        </picture>
+        <div className="background-arc">
+          <picture>
+            <source media="(min-width: 64rem)" srcSet={desktopArcDark}/>
+            <source media="(min-width: 37.5rem)" srcSet={tabletArcDark}/>
+            <source srcSet={mobileArcDark}/>
+            <img className="mobile-arc" src={mobileArcDark} alt=""/>
+          </picture>
+        </div>
       }
       <Header
         selectedLanguageIndex={selectedLanguageIndex}
@@ -70,7 +74,7 @@ function App() {
       />
 
       {/*<main className="quiz">*/}
-      <main className={clsx({"quiz":true}, {"quiz--light": !isDarkMode}, {"quiz--dark": isDarkMode})}>
+      <main className={clsx({"quiz": true}, {"quiz--light": !isDarkMode}, {"quiz--dark": isDarkMode})}>
         <Main
           selectedLanguageIndex={selectedLanguageIndex}
           quizData={quizData}
