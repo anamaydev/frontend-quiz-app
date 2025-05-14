@@ -51,6 +51,7 @@ export default function Header({selectedLanguageIndex, quizData, isDarkMode, set
               type="checkbox"
               id="mode-toggle"
               value={isDarkMode}
+              checked={isDarkMode}
               onChange={() => {
                 return setIsDarkMode(!isDarkMode);
               }}
