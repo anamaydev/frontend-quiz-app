@@ -11,12 +11,12 @@
 *  [x] show score card
 *  [x] check alt for all images/icons
 *  [x] work on dark-light mode
+*  [ ] save mode preference in local storage
 *  [x] add picture tag to decide arc based on width
 *  [x] add animations to correct and incorrect options
 *  [x] add sounds to correct and incorrect selections
 *  [x] add shadows and hover effect to buttons
-*  [ ] add animation to progress bar
-*  [ ] fetch data from fake api
+*  [x] add animation to progress bar
 * */
 
 import {useRef, useState, useEffect} from 'react';
@@ -67,6 +67,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
   // making sure the option references are new every render
   optionsRef.current = [];
 
+  // scroll to the displayed error
   useEffect(()=>{
     if(error){
       errorRef.current.scrollIntoView();
@@ -74,10 +75,20 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
   },[error])
 
   useEffect(()=>{
-    const barWidth = questionNumber * 10;
-    if(barRef.current){
-      barRef.current.style.width = `${barWidth}%`;
+    let barProgress;
+    const barWidth = (questionNumber * 10);
+
+    if(barRef.current !== null){
+      const target = barRef.current;
+      barProgress = gsap.to(target, {
+        width: `${barWidth}%`,
+        duration: 0.5,
+      })
     }
+
+    return ()=> {
+     if (barProgress) barProgress.kill();
+    };
   },[questionNumber])
 
   useEffect(()=>{

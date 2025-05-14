@@ -15,14 +15,23 @@ import desktopArcDark from './assets/images/pattern-background-desktop-dark.svg'
 
 function App() {
   const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
-  // console.log(`isDarkMode: ${isDarkMode}`)
+  const [isDarkMode, setIsDarkMode] = useState(()=>{
+    const storedValue = localStorage.getItem('isDarkMode');
+    if(storedValue === null){
+      return true;
+    }
+    return !(storedValue === 'false');
+  });
 
+  // get quiz data
   const quizData = data.quizzes;
 
+  // set mode preference to local storage and update the styling accordingly
   useEffect(()=>{
     const root = document.getElementById('root');
+    localStorage.setItem('isDarkMode', isDarkMode);
+    console.log(isDarkMode);
     if(!isDarkMode){
       root.style.backgroundColor = "hsla(220, 38%, 97%, 1)";
     }else{
