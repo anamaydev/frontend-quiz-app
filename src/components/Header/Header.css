@@ -50,6 +50,7 @@
   background-color: var(--color-purple-600);
   border-radius: 1.25rem;
   position: relative;
+  cursor: pointer;
 }
 
 .header__mode-toggle-label::before{

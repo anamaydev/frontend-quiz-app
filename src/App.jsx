@@ -1,12 +1,3 @@
-/*ToDO
-*  [x] add picture tag to decide arc based on width
-*  [ ] work on dark-light mode
-*  [ ] store it to local storage
-*  [ ] add shadows and hover effect to buttons
-*  [ ] fetch Data only onload
-*  [ ] check alt for all images/icons
-* */
-
 import {useState, useEffect} from 'react';
 import clsx from "clsx";
 import data from '../data.json';
@@ -26,7 +17,7 @@ function App() {
   const [selectedLanguageIndex, setSelectedLanguageIndex] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(0);
-  console.log(`isDarkMode: ${isDarkMode}`)
+  // console.log(`isDarkMode: ${isDarkMode}`)
 
   const quizData = data.quizzes;
 

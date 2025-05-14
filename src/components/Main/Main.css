@@ -100,14 +100,17 @@
   padding: var(--spacing-200);
   border: 3px solid transparent;
   border-radius: 0.75rem;
+  cursor: pointer;
 }
 
 .quiz__options-label--light{
   background-color: var(--color-white);
+  box-shadow: 0 1rem 2.5rem 0 hsla(220, 29%, 66%, 0.14);
 }
 
 .quiz__options-label--dark{
   background-color: var(--color-blue-850);
+  box-shadow: 0 1rem 2.5rem 0 hsla(216, 25%, 25%, 0.14);
 }
 
 .quiz__options-label--selected{
@@ -194,6 +197,7 @@
   font-weight: 500;
   font-size: var(--font-sm);
   line-height: 1;
+  cursor: pointer;
 }
 
 .quiz__error-container{

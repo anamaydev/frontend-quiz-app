@@ -1,5 +1,4 @@
 /*ToDo:
-*  [ ] fetch data from fake api
 *  [x] finish css for all devices
 *  [x] get user language choice
 *  [x] create question element
@@ -10,10 +9,22 @@
 *  [x] creat submit button
 *  [x] creat next question button
 *  [x] show score card
+*  [x] check alt for all images/icons
+*  [x] work on dark-light mode
+*  [x] add picture tag to decide arc based on width
+*  [x] add animations to correct and incorrect options
+*  [x] add sounds to correct and incorrect selections
+*  [x] add shadows and hover effect to buttons
+*  [ ] add animation to progress bar
+*  [ ] fetch data from fake api
 * */
 
 import {useRef, useState, useEffect} from 'react';
 import { nanoid } from 'nanoid'
+import useSound from 'use-sound'
+import { gsap } from "gsap";
+import { CustomWiggle } from "gsap/CustomWiggle";
+import { CustomEase } from "gsap/CustomEase";
 
 import './Main.css'
 import clsx from 'clsx';
@@ -26,15 +37,35 @@ import htmlIcon from '../../assets/images/icon-html.svg'
 import cssIcon from '../../assets/images/icon-css.svg'
 import javascriptIcon from '../../assets/images/icon-js.svg'
 import accessibilityIcon from '../../assets/images/icon-accessibility.svg'
+import correctSfx from '../../assets/sounds/correct.mp3'
+import incorrectSfx from '../../assets/sounds/incorrect.mp3'
+
+gsap.registerPlugin(CustomEase, CustomWiggle);
+
+// custom ease for wiggle animation
+CustomWiggle.create("myWiggle", {
+  wiggles: 6,
+  type: "easeInOut",
+});
 
 export default function Main({selectedLanguageIndex, quizData, setSelectedLanguageIndex, questionNumber, setQuestionNumber, isDarkMode}) {
   const [selectedOption, setSelectedOption] = useState(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState(false);
   const [error, setError] = useState(false);
   const [points, setPoints] = useState(0);
+  const [wrongOptionIndex, setWrongOptionIndex] = useState(null);
+  const [correctOptionIndex, setCorrectOptionIndex] = useState(null);
+
   const errorRef = useRef(null);
   const barRef = useRef(null);
+  const optionsRef = useRef([]);
   const optionLetters = "ABCD";
+
+  const [playCorrect] = useSound(correctSfx);
+  const [playIncorrect] = useSound(incorrectSfx);
+
+  // making sure the option references are new every render
+  optionsRef.current = [];
 
   useEffect(()=>{
     if(error){
@@ -49,12 +80,50 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
     }
   },[questionNumber])
 
+  useEffect(()=>{
+    let wiggleWiggleWiggle;
+
+    if (wrongOptionIndex !== null){
+        const target = optionsRef.current[wrongOptionIndex];
+
+        wiggleWiggleWiggle = gsap.to(target, {
+          x: -10,
+          ease: "myWiggle",
+          duration: 0.5,
+        });
+    }
+
+    return ()=> {
+      if (wiggleWiggleWiggle && wiggleWiggleWiggle.kill) wiggleWiggleWiggle.kill();
+    }
+  }, [wrongOptionIndex]);
+
+  useEffect(()=>{
+    let scaleScaleScale;
+
+    if(correctOptionIndex !== null){
+      const target = optionsRef.current[correctOptionIndex];
+
+      scaleScaleScale = gsap.to(target, {
+        scale: 1.025,
+        repeat: 1,
+        yoyo: true,
+        duration: 0.25,
+      })
+    }
+
+    return ()=> {
+      if(scaleScaleScale && scaleScaleScale.kill) scaleScaleScale.kill();
+    }
+  },[correctOptionIndex])
+
+
   /* Selecting question based on selected language */
   const currentQuestion = (selectedLanguageIndex !== null && questionNumber < 10) ? quizData[selectedLanguageIndex].questions[questionNumber].question: null;
-  console.log(currentQuestion);
 
   function handleNextQuestion(){
     setSelectedOption(null);
+
     setQuestionNumber(prevQuestionNumber => {
       if(prevQuestionNumber < 10){
         return prevQuestionNumber + 1
@@ -62,20 +131,33 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
         return prevQuestionNumber;
       }
     });
+
     setIsAnswerSubmitted(false);
     setError(false)
+    setWrongOptionIndex(null);
+    setCorrectOptionIndex(null);
   }
 
   function handleSubmit(){
     if(selectedOption === null){
       setError(true);
-      console.log(`---------- error: ${error} ----------`);
     }else{
+      const question = quizData[selectedLanguageIndex].questions[questionNumber];
+      const correctAnswer = question.answer;
+
       setIsAnswerSubmitted(true);
-      const correctAnswer = quizData[selectedLanguageIndex].questions[questionNumber].answer;
+
       if(selectedOption === correctAnswer){
         setPoints(prevPoints => prevPoints + 1);
-        console.log(`++++ Points: ${points} ++++`);
+        // get the correct option index and update state value to trigger animation
+        const correctAnswerIndex = question.options.findIndex(option => option === correctAnswer);
+        setCorrectOptionIndex(correctAnswerIndex);
+        playCorrect();
+      }else{
+        // get the incorrect option index and update state value to trigger animation
+        const wrongAnswerIndex = question.options.findIndex(option => option === selectedOption);
+        setWrongOptionIndex(wrongAnswerIndex);
+        playIncorrect();
       }
     }
   }
@@ -97,6 +179,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
 
     return(
       <label
+        ref={element => optionsRef.current[index] = element}
         key={nanoid()}
         className={clsx(
           {"quiz__options-label": true},
@@ -135,7 +218,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
         </span>
         <p className="quiz__options-value">{option}</p>
         {(isCorrectOption || isAnswerSubmitted && option === correctAnswer) && <img className="quiz__options-correct-icon" src={correctIcon} alt="correct icon"/>}
-        {isIncorrectOption && <img className="quiz__options-correct-icon" src={incorrectIcon} alt="correct icon"/>}
+        {isIncorrectOption && <img className="quiz__options-correct-icon" src={incorrectIcon} alt="incorrect icon"/>}
       </label>
     )
   }) : null;
@@ -271,7 +354,7 @@ export default function Main({selectedLanguageIndex, quizData, setSelectedLangua
             {
               error &&
               <div ref={errorRef} className="quiz__error-container">
-                <img className="quiz__error-icon" src={errorIcon} alt=""/>
+                <img className="quiz__error-icon" src={errorIcon} alt="error icon"/>
                 <p className="quiz__error">Please select an answer</p>
               </div>
             }
